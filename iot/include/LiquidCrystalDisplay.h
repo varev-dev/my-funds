@@ -7,6 +7,23 @@
 
 #include <LiquidCrystal_I2C.h>
 #include <chrono>
+#include <string>
+
+class ScrollableData {
+protected:
+    std::string data;
+    uint8_t position;
+
+public:
+    ScrollableData(const std::string& data);
+    ~ScrollableData();
+
+    std::string getData() const;
+    uint8_t getPosition() const;
+
+    std::string getScrolledData() const;
+    void update();
+};
 
 class LiquidCrystalDisplay : LiquidCrystal_I2C {
 private:
@@ -17,8 +34,9 @@ private:
     const std::chrono::system_clock::time_point last_scroll;
 
 protected:
-    String* data;
+    ScrollableData* data;
     void scroll();
+
 public:
     LiquidCrystalDisplay(uint8_t addr, uint8_t cols, uint8_t rows);
     ~LiquidCrystalDisplay();
