@@ -9,19 +9,29 @@
 #include <chrono>
 #include <string>
 
-class ScrollableData {
+class Data {
 protected:
     std::string data;
+
+public:
+    Data(const std::string& data);
+    ~Data();
+
+    std::string getData() const;
+    void setData(const std::string& data);
+};
+
+class ScrollableData : Data {
+protected:
     uint8_t position;
 
 public:
     ScrollableData(const std::string& data);
     ~ScrollableData();
 
-    std::string getData() const;
     uint8_t getPosition() const;
-
     std::string getScrolledData() const;
+
     void update();
 };
 
@@ -34,7 +44,7 @@ private:
     const std::chrono::system_clock::time_point last_scroll;
 
 protected:
-    ScrollableData* data;
+    Data* data;
     void scroll();
 
 public:
